@@ -78,3 +78,12 @@ export class App extends React.Component {
     );
   }
 }
+
+App.propTypes = {
+  contacts: PropTypes.arrayOf(
+    PropTypes.exact({
+      name: PropTypes.string,
+      number: PropTypes.number,
+    })
+  ),
+};
