@@ -70,10 +70,12 @@ export class App extends React.Component {
         <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
         <Filter value={this.state.filter} onChange={this.handleFilterChange} />
-        <ContactList
-          filterContacts={filterContacts}
-          onDeleteContact={this.deleteContact}
-        />
+        {this.state.contacts && (
+          <ContactList
+            filterContacts={filterContacts}
+            onDeleteContact={this.deleteContact}
+          />
+        )}
       </div>
     );
   }
