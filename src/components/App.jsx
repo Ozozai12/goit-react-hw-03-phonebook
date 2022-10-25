@@ -20,7 +20,7 @@ export class App extends React.Component {
     };
 
     if (
-      this.state.contacts.find(
+      this.state.contacts?.find(
         contact => contact.name.toLowerCase() === name.toLowerCase()
       )
     ) {
