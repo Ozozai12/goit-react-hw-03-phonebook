@@ -15,7 +15,9 @@ export class App extends React.Component {
   componentDidMount() {
     const storedContacts = localStorage.getItem('contacts');
     const parsedContacts = JSON.parse(storedContacts);
-    this.setState({ contacts: parsedContacts });
+    if (parsedContacts) {
+      this.setState({ contacts: parsedContacts });
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -70,12 +72,10 @@ export class App extends React.Component {
         <ContactForm onSubmit={this.addContact} />
         <h2>Contacts</h2>
         <Filter value={this.state.filter} onChange={this.handleFilterChange} />
-        {this.state.contacts && (
-          <ContactList
-            filterContacts={filterContacts}
-            onDeleteContact={this.deleteContact}
-          />
-        )}
+        <ContactList
+          filterContacts={filterContacts}
+          onDeleteContact={this.deleteContact}
+        />
       </div>
     );
   }
