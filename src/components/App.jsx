@@ -12,6 +12,18 @@ export class App extends React.Component {
     filter: '',
   };
 
+  componentDidMount() {
+    const storedContacts = localStorage.getItem('contacts');
+    const parsedContacts = JSON.parse(storedContacts);
+    this.setState({ contacts: parsedContacts });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   addContact = (name, number) => {
     const contact = {
       id: nanoid(),
@@ -20,7 +32,7 @@ export class App extends React.Component {
     };
 
     if (
-      this.state.contacts?.find(
+      this.state.contacts.find(
         contact => contact.name.toLowerCase() === name.toLowerCase()
       )
     ) {
@@ -45,22 +57,10 @@ export class App extends React.Component {
     this.setState({ filter: event.target.value });
   };
 
-  componentDidMount() {
-    const storedContacts = localStorage.getItem('contacts');
-    const parsedContacts = JSON.parse(storedContacts);
-    this.setState({ contacts: parsedContacts });
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (this.state.contacts !== prevState.contacts) {
-      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
-    }
-  }
-
   render() {
     const loweredFilter = this.state.filter.toLowerCase();
 
-    const filterContacts = this.state.contacts?.filter(contact => {
+    const filterContacts = this.state.contacts.filter(contact => {
       return contact.name.toLowerCase().includes(loweredFilter);
     });
 
